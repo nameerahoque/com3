@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>write and illustrate.</title>
+</head>
+    
+<body>
+<h2>CREATE: An interactive platform where you can write a story and draw it too.</h2>
+
+<textarea placeholder="Start writing..."></textarea>
+    <br><br>
+    Drag your mouse across the screen to draw.
+    <br><br>
+
+<input id="hex" placeholder="Color (ex: #000000)"></input><br>
+<input id="size" placeholder="Brush size (ex: 5)"></input><br>
+<canvas id="draw"></canvas>
+<script>
+var canvas = document.getElementById("draw");
+
+var ctx = canvas.getContext("2d");
+resize();
+
+function resize() {ctx.canvas.width = window.innerWidth;
+  ctx.canvas.height = window.innerHeight;
+}
+
+var pos = {x: 0, y: 0 };
+
+function position(z) {
+  pos.x = z.clientX;
+  pos.y = z.clientY;
+}
+
+function draw(z) {
+  if (z.buttons !== 1) return;
+  var color = document.getElementById("hex").value;
+  var width = document.getElementById("size").value;
+    ctx.beginPath();
+    ctx.lineWidth = width;
+    ctx.strokeStyle = color;
+    ctx.moveTo(pos.x, pos.y);
+    position(z);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+}
+
+window.addEventListener("resize", resize);
+document.addEventListener("mousemove", draw);
+document.addEventListener("mousedown", position);
+document.addEventListener("mouseenter", position);
+</script>
+    
+</body>
+</html>
